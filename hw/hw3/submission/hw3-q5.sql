@@ -15,11 +15,11 @@ select distinct F.origin_city as city
 from Flights as F
 where F.origin_city not in (
     select ND.origin_city as NotDirectcity
-    from Flights as F, Flights as ND
-    where F.dest_city = ND.origin_city
-    and F.origin_city = 'Seattle WA'
+    from Flights as tempF, Flights as ND
+    where tempF.dest_city = ND.origin_city
+    and tempF.origin_city = 'Seattle WA'
     and ND.origin_city <> 'Seattle WA'
-    and F.dest_city <> 'Seattle WA'
+    and tempF.dest_city <> 'Seattle WA'
 )
 and F.origin_city not in (
 	select F4.dest_city
