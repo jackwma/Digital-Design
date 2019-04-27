@@ -14,7 +14,7 @@ Name the output column city. Order the output ascending by city.
 select distinct F.origin_city as city
 from Flights as F
 where F.origin_city not in (
-    select ND.origin_city as NotDirectcity
+    select ND.dest_city as NotDirectcity
     from Flights as tempF, Flights as ND
     where tempF.dest_city = ND.origin_city
     and tempF.origin_city = 'Seattle WA'
