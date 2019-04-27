@@ -19,3 +19,30 @@ where F.actual_time = MF.max
 and MF.origin_city = F.origin_city
 and (F.actual_time < 180
 OR F.actual_time = NULL);
+
+/*
+run time: 31 s
+
+output:
+Aberdeen SD
+Abilene TX
+Alpena MI
+Ashland WV
+Augusta GA
+Barrow AK
+Beaumont/Port Arthur TX
+Bemidji MN
+Bethel AK
+Binghamton NY
+Brainerd MN
+Bristol/Johnson City/Kingsport TN
+Butte MT
+Carlsbad CA
+Casper WY
+Cedar City UT
+Chico CA
+College Station/Bryan TX
+Columbia MO
+Columbus GA
+
+*/

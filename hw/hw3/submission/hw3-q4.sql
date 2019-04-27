@@ -26,3 +26,30 @@ where F.dest_city = ND.origin_city
 and F.origin_city = 'Seattle WA'
 group by ND.dest_city
 order by city ASC;
+
+/*
+run time: 23 s
+
+output:
+Aberdeen SD
+Abilene TX
+Alpena MI
+Ashland WV
+Augusta GA
+Barrow AK
+Beaumont/Port Arthur TX
+Bemidji MN
+Bethel AK
+Binghamton NY
+Brainerd MN
+Bristol/Johnson City/Kingsport TN
+Butte MT
+Carlsbad CA
+Casper WY
+Cedar City UT
+Chico CA
+College Station/Bryan TX
+Columbia MO
+Columbus GA
+
+*/

@@ -28,3 +28,16 @@ and F.origin_city not in (
 )
 and F.dest_city <> 'Seattle WA'
 order by city ASC;
+
+/*
+runtime: 1 m 31 s 967 ms 
+
+Output:
+Devils Lake ND
+Hattiesburg/Laurel MS
+St. Augustine FL
+Victoria TX
+
+
+
+*/

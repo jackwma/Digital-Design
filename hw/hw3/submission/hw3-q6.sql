@@ -9,10 +9,21 @@ Name the output column carrier. Order the output ascending by carrier.
 */
 
 select distinct C.name as carrier
-from Carriers as C
+from Carriers as C,
 (select F.carrier_id
  from Flights as F
  where F.origin_city = 'Seattle WA'
- and F.dest_city = 'San Francisco CA')
+ and F.dest_city = 'San Francisco CA') as F
 where F.carrier_id = C.cid
 order by C.name ASC;
+
+/*
+runtime: 4 seconds
+
+output: 
+Alaska Airlines Inc.
+SkyWest Airlines Inc.
+United Air Lines Inc.
+Virgin America
+
+*/
