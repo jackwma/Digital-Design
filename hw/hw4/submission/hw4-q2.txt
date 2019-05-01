@@ -1,0 +1,19 @@
+Wenjie Ma
+CSE 414 Homework 4
+Part 1 problem 2
+
+
+Write a relational algebra plan for the following SQL query:
+
+
+d(name) = female(name)
+a(p) = person_living(p)
+b(name) = male(name)
+c(p1, p2) = parent_child(p1, p2)
+T1(p,name) = a(p) Join[a.p=b.name] b(name)
+T2(p1,p2,name) = c(p1, p2) Join[c.p1=d.name] d(name)
+T3(p1,p2,p,name) = T2(p1,p2,name) Join[p2=a.p] a(p) 
+T4(p1,name) = T1(p,name) NOT EXIST T3(p1,p2,p,name)
+T5(p) = Projection(p1)(T4)
+
+

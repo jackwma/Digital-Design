@@ -1,7 +1,3 @@
-/* Wenjie ma Homework 4 */
-
-
-
 /************ data model **************/
 .symbol_type PersonType
 .symbol_type DescriptionType
