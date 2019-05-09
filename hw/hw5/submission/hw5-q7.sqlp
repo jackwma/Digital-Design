@@ -1,0 +1,14 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 7 */
+
+use hw5;
+select c.`-car_code` as country_code, c.name as country_name, seaArray as seas
+from world as w, w.mondial.country as c 
+let seaArray = (select s.name as sea 
+	from w.mondial.sea as s, split(s.`-country`, ' ') as cs 
+	where cs = c.`-car_code`)
+where array_count(seaArray) >= 2
+order by array_count(seaArray) desc;
+
+--Duration of all jobs: 0.657 sec

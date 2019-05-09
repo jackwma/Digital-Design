@@ -1,0 +1,13 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 2 */
+
+use hw5;
+select c.name as country, c.population as population, count(r) as num_religions
+from world as w, w.mondial.country as c, 
+	case when is_array(c.religions) then c.religions
+	ELSE [c.religions] END as r 
+group by c, c.name, c.population
+order by c.name asc;
+
+--Duration of all jobs: 0.637 sec
