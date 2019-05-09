@@ -11,4 +11,4 @@ let arr = (select s.name as sea
 where array_count(arr) =0
 order by float(c.`-area`) desc;
 
---Duration of all jobs: 0.645 sec
+--Duration of all jobs: 0.891 sec

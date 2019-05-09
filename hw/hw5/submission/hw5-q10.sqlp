@@ -40,4 +40,4 @@ CREATE INDEX countryIDs ON sea(`-country`) TYPE KEYWORD;
 LOAD DATASET sea USING localfs
     (("path"="127.0.0.1:////Users/JackMa/hw/hw5/starter-code/sea.adm"),("format"="adm"));
 
---Duration of all jobs: 3.196 sec
+--Duration of all jobs: 1.792 sec

@@ -16,4 +16,4 @@ where c1.`-car_code` < c2.`-car_code` and
 		where c1.`-car_code` in split(s.`-country`, ' ') 
 		and c2.`-car_code` in split(s.`-country`, ' '));
 
---Duration of all jobs: 14.817 sec
+--Duration of all jobs: 24.912 sec

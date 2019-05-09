@@ -10,4 +10,4 @@ let mountArray = (select m.name as mountian, m.height as mountain_height
 	where c.`-car_code` = s)
 order by array_count(mountArray) desc;
 
---Duration of all jobs: 3.841 sec
+--Duration of all jobs: 4.831 sec

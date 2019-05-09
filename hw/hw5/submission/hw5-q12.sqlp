@@ -16,6 +16,6 @@ LET cMounts = (select m.name as mountain
 		and c2.`-car_code` in split(s.`-country`, ' '))
 where c1.`-car_code` < c2.`-car_code` and exists cMounts and exists cSeas;
 
---Duration of all jobs: 17.134 sec
+--Duration of all jobs: 31.021 sec
 
 

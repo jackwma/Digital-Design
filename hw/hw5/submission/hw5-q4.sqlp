@@ -10,5 +10,5 @@ from world as w, w.mondial.country as c,
 	else [c.ethnicgroups] end as e
 group by e.`#text`;
 
---Duration of all jobs: 0.485 sec
+--Duration of all jobs: 0.374 sec
 

@@ -8,4 +8,4 @@ from world as w, w.mondial.mountain as m, w.mondial.country as c, split(m.`-coun
 where c.`-car_code` = s
 order by int(m.height) desc;
 
---Duration of all jobs: 23.533 sec
+--Duration of all jobs: 60.710 sec

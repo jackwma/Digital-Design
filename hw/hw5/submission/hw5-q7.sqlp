@@ -11,4 +11,4 @@ let seaArray = (select s.name as sea
 where array_count(seaArray) >= 2
 order by array_count(seaArray) desc;
 
---Duration of all jobs: 0.657 sec
+--Duration of all jobs: 0.982 sec
