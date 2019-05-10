@@ -6,7 +6,7 @@ use hw5;
 select s.name as city
 from world as w, w.mondial.country as c, c.province as p, 
 	case when is_array(p.city) then p.city
-	else [p.city] END AS s
+	else [p.city] end as s
 where c.name = 'Peru'
 order by s.name asc;	
 
