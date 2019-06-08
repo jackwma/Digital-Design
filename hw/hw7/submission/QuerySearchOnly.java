@@ -91,7 +91,7 @@ public class QuerySearchOnly
    */
   public void prepareStatements() throws Exception
   {
-    checkFlightCapacityStatement = conn.prepareStatement(CHECK_FLIGHT_CAPACITY);
+    //checkFlightCapacityStatement = conn.prepareStatement(CHECK_FLIGHT_CAPACITY);
 
     directFlightStatement = conn.prepareStatement(DIRECT_SEARCH);
 
