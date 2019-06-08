@@ -528,21 +528,25 @@ public class Query extends QuerySearchOnly {
             ResultSet tempSet = checkReserveUser.executeQuery();
             if(tempSet.next()) {
                 if (tempSet.getInt("paid") == 1) {
-                    getFlights.setInt(1, tempSet.getInt("fid1"));
-                    getFlights.setInt(1, tempSet.getInt("fid2"));
+                    getFlights.clearParameters();
+                    int fidOne = tempSet.getInt("fid1");
+                    int fidTwo = tempSet.getInt("fid2");
+                    getFlights.setInt(1, fidOne);
+                    getFlights.setInt(2, fidTwo);
                     ResultSet costSet = getFlights.executeQuery();
                     int totCost = 0;
                     while (costSet.next()) {
                         totCost += costSet.getInt("price");
                     }
                     getUser.setString(1, this.username);
-                    ResultSet userSet = getUser.executeQuery();
-
-                    setBalance.setInt(1, userSet.getInt("balance") + totCost);
-                    setBalance.setString(2, this.username);
-                    setBalance.executeUpdate();
-                    costSet.close();
-                    userSet.close();
+                    ResultSet balanceSet = getUser.executeQuery();
+                    if (balanceSet.next()) {
+                        int userBalance = balanceSet.getInt("balance");
+                        int newBalance = userBalance + totCost;
+                        setBalance.setInt(1, newBalance);
+                        setBalance.setString(2, this.username);
+                        setBalance.executeUpdate();
+                    }
                 }
                 cancelReserve.setInt(1, reservationId);
                 cancelReserve.executeUpdate();
@@ -550,13 +554,9 @@ public class Query extends QuerySearchOnly {
                 tempSet.close();
                 return "Canceled reservation " + reservationId + "\n";
             } else {
-                try {
-                    rollbackTransaction();
-                } catch(SQLException ex) {
-
-                }
                 return "Failed to cancel reservation " + reservationId;
             }
+
         } catch(Exception e) {
             try {
                 rollbackTransaction();
