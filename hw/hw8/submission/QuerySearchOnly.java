@@ -24,7 +24,13 @@ public class QuerySearchOnly
     protected PreparedStatement rollbackTransactionStatement;
 
     private static final String CHECK_FLIGHT_CAPACITY = "SELECT capacity FROM Flights WHERE fid = ?";
-    private static final String DIRECT_SEARCH = "SELECT TOP (?) fid, day_of_month, carrier_id, flight_num, origin_city, dest_city, actual_time, capacity, price FROM FLIGHTS WHERE origin_city = ? AND dest_city = ? AND day_of_month = ? AND canceled = 0 ORDER BY actual_time ASC";
+    private static final String DIRECT_SEARCH =
+            "SELECT TOP (?) fid,day_of_month,carrier_id,flight_num,origin_city,dest_city,actual_time,capacity,price "
+            + "FROM Flights "
+            + "WHERE origin_city = ? " +
+            "AND dest_city = ? " +
+            "AND day_of_month = ? AND canceled = 0"
+            + "ORDER BY actual_time,fid ASC";
     private static final String INDIRECT_SEARCH =
             "SELECT TOP(?) X.fid AS fid1,X.day_of_month AS day1,X.carrier_id AS carrier1,X.flight_num AS fnum1,X.origin_city AS origin1,X.dest_city AS dest1,X.actual_time AS time1, X.capacity AS capacity1,X.price AS price1, Y.fid AS fid2,Y.day_of_month AS day2,Y.carrier_id AS carrier2,Y.flight_num AS fnum2,Y.origin_city AS origin2,Y.dest_city AS dest2,Y.actual_time as time2, Y.capacity AS capacity2,Y.price AS price2, X.actual_time + Y.actual_time AS time3 FROM FLIGHTS X, FLIGHTS Y\n" +
                     "WHERE X.origin_city = ? AND X.dest_city = Y.origin_city AND Y.dest_city = ? AND Y.day_of_month = ? AND X.day_of_month = Y.day_of_month AND NOT X.dest_city = ?\n AND X.canceled = 0 AND Y.canceled = 0 ORDER BY time3, X.fid, Y.fid ASC";
