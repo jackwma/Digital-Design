@@ -155,7 +155,6 @@ public class Query extends QuerySearchOnly {
             if(tempSet.next()) {
                 this.username = username;
                 tempSet.close();
-                deleteReservations.executeUpdate();
 
                 return "Logged in as " + username + "\n";
             } else {
@@ -258,7 +257,7 @@ public class Query extends QuerySearchOnly {
                 insertReserve.executeUpdate();
                 checkSet.close();
                 tempSet.close();
-                int oldId = this.reservationID + 1;
+                int oldId = this.reservationID;
                 this.reservationID += 1;
                 commitTransaction();
                 return "Booked flight(s), reservation ID: " + oldId + "\n";
@@ -322,7 +321,7 @@ public class Query extends QuerySearchOnly {
                     costSet.close();
                     tempSet.close();
                     rollbackTransaction();
-                    return "User has only " + userBalance + " in account but itinerary costs " + totCost + \n";
+                    return "User has only " + userBalance + " in account but itinerary costs " + totCost + "\n";
                 }
                 int newBalance = userBalance - totCost;
                 setBalance.setInt(1, newBalance);
@@ -333,7 +332,7 @@ public class Query extends QuerySearchOnly {
                 costSet.close();
                 tempSet.close();
                 commitTransaction();
-                return "Paid reservation: " + reservationId + " remaining balance: " + newBalance + "]\n";
+                return "Paid reservation: " + reservationId + " remaining balance: " + newBalance + "\n";
             }
 
 
@@ -379,8 +378,8 @@ public class Query extends QuerySearchOnly {
             ResultSet tempSet = checkReserve.executeQuery();
             if (!tempSet.next()) {
                 return "No reservations found\n";
-            } else {
-                while(tempSet.next()) {
+            }
+            do {
                     int fidOne = tempSet.getInt("fid1");
                     int fidTwo = tempSet.getInt("fid2");
                     int rID = tempSet.getInt("reservationId");
@@ -434,9 +433,8 @@ public class Query extends QuerySearchOnly {
                     } else {
                         return "Failed to retrieve reservations\n";
                     }
-                }
-                tempSet.close();
-            }
+            } while(tempSet.next());
+            tempSet.close();
         } catch(Exception e) {
             e.printStackTrace();
             return "Failed to retrieve reservations\n";
