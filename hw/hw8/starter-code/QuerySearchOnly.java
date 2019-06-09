@@ -214,41 +214,42 @@ public class QuerySearchOnly
 
         ResultSet tempSet = directFlightStatement.executeQuery();
 
-        while (tempSet.next()) {
+        if (tempSet.next()) {
+            do {
+                int result_dayOfMonth = tempSet.getInt("day_of_month");
+                String result_carrierId = tempSet.getString("carrier_id");
+                int result_fid = tempSet.getInt("fid");
+                String result_originCity = tempSet.getString("origin_city");
+                String result_destCity = tempSet.getString("dest_city");
+                int result_time = tempSet.getInt("actual_time");
+                int result_capacity = tempSet.getInt("capacity");
+                int result_price = tempSet.getInt("price");
+                String result_flightNum = tempSet.getString("flight_num");
 
-            int result_dayOfMonth = tempSet.getInt("day_of_month");
-            String result_carrierId = tempSet.getString("carrier_id");
-            int result_fid = tempSet.getInt("fid");
-            String result_originCity = tempSet.getString("origin_city");
-            String result_destCity = tempSet.getString("dest_city");
-            int result_time = tempSet.getInt("actual_time");
-            int result_capacity = tempSet.getInt("capacity");
-            int result_price = tempSet.getInt("price");
-            String result_flightNum = tempSet.getString("flight_num");
+                Flight flight = new Flight();
+                flight.dayOfMonth = result_dayOfMonth;
+                flight.carrierId = result_carrierId;
+                flight.fid = result_fid;
+                flight.flightNum = result_flightNum;
+                flight.originCity = result_originCity;
+                flight.destCity = result_destCity;
+                flight.time = result_time;
+                flight.capacity = result_capacity;
+                flight.price = result_price;
 
-            Flight flight = new Flight();
-            flight.dayOfMonth = result_dayOfMonth;
-            flight.carrierId = result_carrierId;
-            flight.fid = result_fid;
-            flight.flightNum = result_flightNum;
-            flight.originCity = result_originCity;
-            flight.destCity = result_destCity;
-            flight.time = result_time;
-            flight.capacity = result_capacity;
-            flight.price = result_price;
+                insertItin.clearParameters();
+                insertItin.setInt(1, itineraryCount);
+                insertItin.setInt(2, result_fid);
+                insertItin.setInt(3, -1);
+                insertItin.setInt(4, result_dayOfMonth);
+                insertItin.executeUpdate();
 
-            insertItin.clearParameters();
-            insertItin.setInt(1, itineraryCount);
-            insertItin.setInt(2, result_fid);
-            insertItin.setInt(3, -1);
-            insertItin.setInt(4, result_dayOfMonth);
-            insertItin.executeUpdate();
+                output += "Itinerary " + itineraryCount + ": 1 flight(s), " + flight.time + " minutes\n";
+                output += flight.toString() + "\n";
+                directFlight++;
 
-            output += "Itinerary " + itineraryCount + ": 1 flight(s), " + flight.time + " minutes\n";
-            output += flight.toString() + "\n";
-            directFlight++;
-
-            itineraryCount++;
+                itineraryCount++;
+            } while (tempSet.next());
         }
         tempSet.close();
         return output;
@@ -266,65 +267,66 @@ public class QuerySearchOnly
         indirectFlightStatement.setString(5, destinationCity);
 
         ResultSet tempSet = indirectFlightStatement.executeQuery();
-        while (tempSet.next()) {
+        if (tempSet.next()) {
+            do {
+                int result_dayOfMonth = tempSet.getInt("day1");
+                String result_carrierId = tempSet.getString("carrier1");
+                int result_fid = tempSet.getInt("fid1");
+                String result_originCity = tempSet.getString("origin1");
+                String result_destCity = tempSet.getString("dest1");
+                int result_time = tempSet.getInt("time1");
+                int result_capacity = tempSet.getInt("capacity1");
+                int result_price = tempSet.getInt("price1");
+                String result_flightNum = tempSet.getString("fnum1");
 
-            int result_dayOfMonth = tempSet.getInt("day1");
-            String result_carrierId = tempSet.getString("carrier1");
-            int result_fid = tempSet.getInt("fid1");
-            String result_originCity = tempSet.getString("origin1");
-            String result_destCity = tempSet.getString("dest1");
-            int result_time = tempSet.getInt("time1");
-            int result_capacity = tempSet.getInt("capacity1");
-            int result_price = tempSet.getInt("price1");
-            String result_flightNum = tempSet.getString("fnum1");
+                int fid1 = result_fid;
 
-            int fid1 = result_fid;
+                Flight flight1 = new Flight();
+                flight1.dayOfMonth = result_dayOfMonth;
+                flight1.carrierId = result_carrierId;
+                flight1.fid = result_fid;
+                flight1.flightNum = result_flightNum;
+                flight1.originCity = result_originCity;
+                flight1.destCity = result_destCity;
+                flight1.time = result_time;
+                flight1.capacity = result_capacity;
+                flight1.price = result_price;
 
-            Flight flight1 = new Flight();
-            flight1.dayOfMonth = result_dayOfMonth;
-            flight1.carrierId = result_carrierId;
-            flight1.fid = result_fid;
-            flight1.flightNum = result_flightNum;
-            flight1.originCity = result_originCity;
-            flight1.destCity = result_destCity;
-            flight1.time = result_time;
-            flight1.capacity = result_capacity;
-            flight1.price = result_price;
+                result_dayOfMonth = tempSet.getInt("day2");
+                result_carrierId = tempSet.getString("carrier2");
+                result_fid = tempSet.getInt("fid2");
+                result_originCity = tempSet.getString("origin2");
+                result_destCity = tempSet.getString("dest2");
+                result_time = tempSet.getInt("time2");
+                result_capacity = tempSet.getInt("capacity2");
+                result_price = tempSet.getInt("price2");
+                result_flightNum = tempSet.getString("fnum2");
 
-            result_dayOfMonth = tempSet.getInt("day2");
-            result_carrierId = tempSet.getString("carrier2");
-            result_fid = tempSet.getInt("fid2");
-            result_originCity = tempSet.getString("origin2");
-            result_destCity = tempSet.getString("dest2");
-            result_time = tempSet.getInt("time2");
-            result_capacity = tempSet.getInt("capacity2");
-            result_price = tempSet.getInt("price2");
-            result_flightNum = tempSet.getString("fnum2");
+                Flight flight2 = new Flight();
+                flight2.dayOfMonth = result_dayOfMonth;
+                flight2.carrierId = result_carrierId;
+                flight2.fid = result_fid;
+                flight2.flightNum = result_flightNum;
+                flight2.originCity = result_originCity;
+                flight2.destCity = result_destCity;
+                flight2.time = result_time;
+                flight2.capacity = result_capacity;
+                flight2.price = result_price;
 
-            Flight flight2 = new Flight();
-            flight2.dayOfMonth = result_dayOfMonth;
-            flight2.carrierId = result_carrierId;
-            flight2.fid = result_fid;
-            flight2.flightNum = result_flightNum;
-            flight2.originCity = result_originCity;
-            flight2.destCity = result_destCity;
-            flight2.time = result_time;
-            flight2.capacity = result_capacity;
-            flight2.price = result_price;
+                insertItin.clearParameters();
+                insertItin.setInt(1, itineraryCount);
+                insertItin.setInt(2, fid1);
+                insertItin.setInt(3, result_fid);
+                insertItin.setInt(4, result_dayOfMonth);
+                insertItin.executeUpdate();
 
-            insertItin.clearParameters();
-            insertItin.setInt(1, itineraryCount);
-            insertItin.setInt(2, fid1);
-            insertItin.setInt(3, result_fid);
-            insertItin.setInt(4, result_dayOfMonth);
-            insertItin.executeUpdate();
+                int combinedTime = flight1.time + flight2.time;
+                output += "Itinerary " + itineraryCount + ": 2 flight(s), " + combinedTime + " minutes\n";
+                output += flight1.toString() + "\n";
+                output += flight2.toString() + "\n";
 
-            int combinedTime = flight1.time + flight2.time;
-            output += "Itinerary " + itineraryCount + ": 2 flight(s), " + combinedTime + " minutes\n";
-            output += flight1.toString() + "\n";
-            output += flight2.toString() + "\n";
-
-            itineraryCount++;
+                itineraryCount++;
+            } while (tempSet.next());
         }
         tempSet.close();
         return output;

@@ -1,3 +1,4 @@
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Query extends QuerySearchOnly {
@@ -84,6 +85,15 @@ public class Query extends QuerySearchOnly {
     private static final String UPDATE_RESERVES = "UPDATE RESERVATIONS SET paid = ? WHERE username = ? and reservationId = ? ";
     private PreparedStatement updateReserves;
 
+    private static final String CHECK_DUP = "SELECT * FROM RESERVATIONS where username = ? ";
+    private PreparedStatement checkDup;
+
+    private static final String CHECK_DUP_ID = "SELECT * FROM RESERVATIONS where reservationId = ? ";
+    private PreparedStatement checkDupID;
+
+    private static final String GET_SIZE = "SELECT COUNT(*) FROM RESERVATIONS where username = ? ";
+    private PreparedStatement getSize;
+
     public Query(String configFilename) {
         super(configFilename);
     }
@@ -140,6 +150,10 @@ public class Query extends QuerySearchOnly {
         cancelReserveUser = conn.prepareStatement(CANCEL_RESERVE_USER);
         getItin = conn.prepareStatement(GET_ALL_ITIN);
         updateItinId = conn.prepareStatement(UPDATE_ITIN_ID);
+        checkDup = conn.prepareStatement(CHECK_DUP);
+        getSize = conn.prepareStatement(GET_SIZE);
+        checkDupID = conn.prepareStatement(CHECK_DUP_ID);
+
         clearTables();
 
     }
@@ -153,8 +167,7 @@ public class Query extends QuerySearchOnly {
      *
      * Otherwise, return "Logged in as [username]\n".
      */
-    public String transaction_login(String username, String password)
-    {
+    public String transaction_login(String username, String password) {
         if(this.username != null) {
             return "User already logged in\n";
         }
@@ -165,15 +178,25 @@ public class Query extends QuerySearchOnly {
             ResultSet tempSet = allUser.executeQuery();
             if(tempSet.next()) {
                 this.username = username;
-                tempSet.close();
+                checkDup.clearParameters();
+                checkDup.setString(1, username);
+                ResultSet checkID = checkDup.executeQuery();
 
+                while(checkID.next()) {
+                    this.reservationID++;
+                }
+
+                this.reservationID++;
+                checkID.close();
+                tempSet.close();
                 return "Logged in as " + username + "\n";
             } else {
                 try {
                     rollbackTransaction();
-                } catch(SQLException ex) {
+                } catch (SQLException ex) {
 
                 }
+
                 return "Login failed\n";
             }
         } catch(Exception e) {
@@ -248,15 +271,12 @@ public class Query extends QuerySearchOnly {
             checkItin.clearParameters();
             checkItin.setInt(1, itineraryId);
             ResultSet tempSet = checkItin.executeQuery();
-            int day = -1;
-
             if(!tempSet.next()) {
                 tempSet.close();
                 rollbackTransaction();
                 return "No such itinerary " + itineraryId + "\n";
-            } else {
-                day = tempSet.getInt("day");
             }
+            int day = tempSet.getInt("day");
             checkReserveId.clearParameters();
             checkReserveId.setInt(1, day);
             ResultSet checkSet = checkReserveId.executeQuery();
@@ -265,32 +285,38 @@ public class Query extends QuerySearchOnly {
                 tempSet.close();
                 rollbackTransaction();
                 return "You cannot book two flights in the same day\n";
-            } else {
-                int fidOne = tempSet.getInt("fid1");
-                int fidTwo = tempSet.getInt("fid2");
-
-                insertReserve.clearParameters();
-                insertReserve.setInt(1, this.reservationID);
-                insertReserve.setInt(2, day);
-                insertReserve.setInt(3, fidOne);
-                insertReserve.setInt(4, fidTwo);
-                insertReserve.setString(5, this.username);
-                insertReserve.setInt(6, 0);
-                insertReserve.executeUpdate();
-
-                checkSet.close();
-                tempSet.close();
-                int oldId = this.reservationID;
-                this.reservationID += 1;
-                commitTransaction();
-                return "Booked flight(s), reservation ID: " + oldId + "\n";
             }
+            checkDupID.clearParameters();
+            checkDupID.setInt(1, itineraryId);
+            ResultSet checkDupSet = checkDupID.executeQuery();
+            if(checkDupSet.next()) {
+                if (checkDupSet.getString("username") != this.username) {
+                    cancelReserve.clearParameters();
+                    cancelReserve.setInt(1, itineraryId);
+                    cancelReserve.executeUpdate();
+                }
+            }
+            int fidOne = tempSet.getInt("fid1");
+            int fidTwo = tempSet.getInt("fid2");
+
+            insertReserve.clearParameters();
+            insertReserve.setInt(1, this.reservationID);
+            insertReserve.setInt(2, day);
+            insertReserve.setInt(3, fidOne);
+            insertReserve.setInt(4, fidTwo);
+            insertReserve.setString(5, this.username);
+            insertReserve.setInt(6, 0);
+            insertReserve.executeUpdate();
+
+            int oldID = this.reservationID;
+            checkDupSet.close();
+            checkSet.close();
+            tempSet.close();
+            this.reservationID += 1;
+            commitTransaction();
+            return "Booked flight(s), reservation ID: " + oldID + "\n";
         } catch(Exception e) {
-            try {
-                rollbackTransaction();
-            } catch(SQLException ex) {
-
-            }
+            e.printStackTrace();
             return "Booking failed\n";
         }
     }
