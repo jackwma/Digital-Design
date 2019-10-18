@@ -1,0 +1,109 @@
+/* Wenjie Ma Homework 4 Part 2 */
+
+/************ data model **************/
+.symbol_type PersonType
+.symbol_type DescriptionType
+
+.decl person(name:PersonType, description:DescriptionType)
+.input person(filename="DATA/person.facts")
+
+.decl female(name:PersonType)
+.input female(filename="DATA/female.facts")
+
+.decl male(name:PersonType)
+.input male(filename="DATA/male.facts")
+
+.decl parent_child(p1:PersonType, p2:PersonType)
+.input parent_child(filename="DATA/parent_child.facts")
+
+.decl person_living(p:PersonType)
+.input person_living(filename="DATA/person_living.facts")
+
+/************* problem 0 **************/
+/**** Find all children of Priscilla ****/
+.decl p0(x:PersonType, d:DescriptionType)
+.output p0(filename="hw4-0.ans")
+
+// NOTE: if you want to redirect the output to console
+// you can use the syntax:
+.output p0(IO=stdout)
+p0(x,d) :- parent_child("Priscilla",x), person(x,d).
+
+// NOTE: DO NOT remove the declarations or the .output statements below.
+// you can ignore any "No rules/facts defined for relation" warnings when you
+// have not defined the rules for those relations
+/************* problem 1 **************/
+.decl p1(name:PersonType,description:DescriptionType)
+.decl d(parent:PersonType,child:PersonType)
+
+.output p1(filename="hw4-1.ans")
+.output p1(IO=stdout)
+
+d(parent, child) :- parent_child(parent, child), parent="Priscilla".
+d(child, grandchild) :- d(child, name), parent_child(name, grandchild).
+p1(name, description) :- d(_, name), person(name, description).
+
+/************* problem 2 **************/
+.decl p2(x:PersonType, d:DescriptionType, m:number)
+.decl max_men(x:number)
+.decl max_women(x:number)
+.decl parent1(name:PersonType, amount:number)
+.decl parent2(name:PersonType, amount:number)
+
+.output p2(filename="hw4-2.ans")
+.output p2(IO=stdout)
+
+parent1(name, amount) :- female(name), amount = count : { parent_child(name, _) }.
+parent2(name, amount) :- male(name), amount = count : { parent_child(name, _) }.
+
+max_men(x) :- x = max x : { parent2(_, x) }.
+max_women(x) :- x = max x : { parent1(_, x) }.
+
+p2(x, d, m) :- parent1(x, m), max_men(m), person(x, d).
+p2(x, d, m) :- parent1(x, m), max_women(m), person(x, d).
+
+/************* problem 3 **************/
+.decl p3(x:PersonType, m1:number, m2:number)
+.decl gen(x:PersonType, n:number)
+.decl gen_living(x:PersonType, n:number)
+
+
+.output p3(filename="hw4-3.ans")
+.output p3(IO=stdout)
+
+gen(name, n) :- person(name, _), !parent_child(_ , name), n = 0.
+gen(child, n+1) :- gen(name, n), parent_child(name, child).
+
+gen_living(name, n) :- person_living(name), gen(name, n).
+
+p3(name, m1, m2) :- person_living(name), m1 = min(m) : { gen_living(name, m) }, m2 = max(m) : { gen_living(name, m) }.
+
+
+
+/************* problem 4 **************/
+.decl p4(x:PersonType)
+.decl currLiving(x:number)
+.decl mutualLiv(name1:PersonType, name2:PersonType)
+
+.output p4(filename="hw4-4.ans")
+.output p4(IO=stdout)
+
+mutualLiv(name1, name2) :- female(name1), person_living(name2), parent_child(name1, name2).
+mutualLiv(name1, name2) :- female(name1), parent_child(name1, x), mutualLiv(x, name2).
+currLiving(x) :- x = count : { person_living(_) }.
+
+p4(x) :- mutualLiv(x, _), currLiving(c), c = count : { mutualLiv(x, _) }.
+
+
+/************* problem 5 **************/
+.decl p5(x:PersonType)
+.decl allMCA(name:PersonType, x:number)
+.decl mCount(x:number)
+
+.output p5(filename="hw4-5.ans")
+.output p5(IO=stdout)
+
+allMCA(name, x) :- gen(name, x), p4(name).
+mCount(x) :- x = max(n) : { allMCA(_, n) }.
+p5(x) :- allMCA(x, c), mCount(c).
+

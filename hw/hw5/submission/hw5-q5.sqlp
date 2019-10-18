@@ -1,0 +1,11 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 5 */
+
+use hw5;
+select m.name as mountain, m.height as height, c.`-car_code` as country_code, c.name as country_name
+from world as w, w.mondial.mountain as m, w.mondial.country as c, split(m.`-country`, ' ') as s
+where c.`-car_code` = s
+order by int(m.height) desc;
+
+--Duration of all jobs: 60.710 sec

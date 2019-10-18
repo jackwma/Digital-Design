@@ -1,0 +1,21 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 12 */
+
+
+USE hw5index;
+select c1.name as first_country, c2.name as second_country, cMounts as mountain, cSeas as sea
+from country as c1,country as c2
+LET cMounts = (select m.name as mountain
+		from mountain as m
+		where c1.`-car_code` in split(m.`-country`, ' ') 
+		and c2.`-car_code` in split(m.`-country`, ' ')),
+	cSeas = (select s.name as sea
+		from sea as s
+		where c1.`-car_code` in split(s.`-country`, ' ') 
+		and c2.`-car_code` in split(s.`-country`, ' '))
+where c1.`-car_code` < c2.`-car_code` and exists cMounts and exists cSeas;
+
+--Duration of all jobs: 31.021 sec
+
+

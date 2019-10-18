@@ -1,0 +1,38 @@
+# Trying to cancel the different flights.
+#
+# user 1
+create user1 user1 10000
+login user1 user1
+search "Seattle WA" "Boston MA" 0 13 10
+book 1
+cancel 1
+quit
+*
+#
+# expected printouts for user 1
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 307 minutes
+ID: 727808 Day: 13 Carrier: B6 Number: 498 Origin: Seattle WA Dest: Boston MA Duration: 307 Capacity: 0 Price: 779
+Itinerary 1: 1 flight(s), 307 minutes
+ID: 727808 Day: 13 Carrier: B6 Number: 498 Origin: Seattle WA Dest: Boston MA Duration: 307 Capacity: 0 Price: 779
+Itinerary 2: 1 flight(s), 310 minutes
+ID: 728773 Day: 13 Carrier: B6 Number: 1698 Origin: Seattle WA Dest: Boston MA Duration: 310 Capacity: 10 Price: 965
+Itinerary 3: 1 flight(s), 310 minutes
+ID: 728773 Day: 13 Carrier: B6 Number: 1698 Origin: Seattle WA Dest: Boston MA Duration: 310 Capacity: 10 Price: 965
+Itinerary 4: 1 flight(s), 313 minutes
+ID: 60466 Day: 13 Carrier: AS Number: 24 Origin: Seattle WA Dest: Boston MA Duration: 313 Capacity: 6 Price: 808
+Itinerary 5: 1 flight(s), 313 minutes
+ID: 60466 Day: 13 Carrier: AS Number: 24 Origin: Seattle WA Dest: Boston MA Duration: 313 Capacity: 6 Price: 808
+Itinerary 6: 1 flight(s), 315 minutes
+ID: 728550 Day: 13 Carrier: B6 Number: 998 Origin: Seattle WA Dest: Boston MA Duration: 315 Capacity: 7 Price: 925
+Itinerary 7: 1 flight(s), 315 minutes
+ID: 728550 Day: 13 Carrier: B6 Number: 998 Origin: Seattle WA Dest: Boston MA Duration: 315 Capacity: 7 Price: 925
+Itinerary 8: 1 flight(s), 316 minutes
+ID: 710512 Day: 13 Carrier: AS Number: 734 Origin: Seattle WA Dest: Boston MA Duration: 316 Capacity: 18 Price: 830
+Itinerary 9: 1 flight(s), 316 minutes
+ID: 710512 Day: 13 Carrier: AS Number: 734 Origin: Seattle WA Dest: Boston MA Duration: 316 Capacity: 18 Price: 830
+Booked flight(s), reservation ID: 1
+Canceled reservation 1
+Goodbye
+*

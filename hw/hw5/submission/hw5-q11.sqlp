@@ -1,0 +1,19 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 11 */
+
+
+use hw5index;
+select c1.name as first_country, c2.name as second_country
+from country as c1,country as c2
+where c1.`-car_code` < c2.`-car_code` and 
+	exists(select m.`-id` 
+		from mountain as m
+		where c1.`-car_code` in split(m.`-country`, ' ') 
+		and c2.`-car_code` in split(m.`-country`, ' ')) and 
+	exists(select s.`-id` 
+		from sea as s
+		where c1.`-car_code` in split(s.`-country`, ' ') 
+		and c2.`-car_code` in split(s.`-country`, ' '));
+
+--Duration of all jobs: 24.912 sec

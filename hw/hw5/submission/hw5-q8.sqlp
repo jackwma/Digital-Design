@@ -1,0 +1,14 @@
+/* Wenjie Ma CSE 414
+   Dan Suciu 
+   Homework 5 Problem 8 */
+
+use hw5;
+select c.`-car_code` as country_code, c.name as country_name, c.`-area` as area
+from world as w, w.mondial.country as c 
+let arr = (select s.name as sea 
+	from w.mondial.sea as s, split(s.`-country`, ' ') as cs 
+	where cs = c.`-car_code`)
+where array_count(arr) =0
+order by float(c.`-area`) desc;
+
+--Duration of all jobs: 0.891 sec
