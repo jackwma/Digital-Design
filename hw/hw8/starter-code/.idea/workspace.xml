@@ -14,16 +14,14 @@
     <option name="delegatedBuild" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuerySearchOnly.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="326" column="33" selection-start-line="326" selection-start-column="33" selection-end-line="326" selection-end-column="33" />
+            <state relative-caret-position="4815">
+              <caret line="326" selection-start-line="326" selection-end-line="326" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2332#2333#0" expanded="true" />
-                <element signature="e#2378#2379#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -32,12 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Query.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1100">
-              <caret line="437" column="38" selection-start-line="437" selection-start-column="38" selection-end-line="437" selection-end-column="38" />
-              <folding>
-                <element signature="e#3385#3386#0" expanded="true" />
-                <element signature="e#3422#3423#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="381">
+              <caret line="257" column="55" lean-forward="true" selection-start-line="257" selection-start-column="55" selection-end-line="257" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -80,7 +74,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -93,6 +86,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -127,13 +121,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24959612" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.2536349" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -156,36 +151,21 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/master branch/hw8/submission/Query.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1212">
-          <caret line="89" selection-start-line="89" selection-end-line="91" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/master branch/hw8/submission/Query.java" />
     <entry file="file://$PROJECT_DIR$/QuerySearchOnly.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="326" column="33" selection-start-line="326" selection-start-column="33" selection-end-line="326" selection-end-column="33" />
+        <state relative-caret-position="4815">
+          <caret line="326" selection-start-line="326" selection-end-line="326" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2332#2333#0" expanded="true" />
-            <element signature="e#2378#2379#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Query.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="437" column="38" selection-start-line="437" selection-start-column="38" selection-end-line="437" selection-end-column="38" />
-          <folding>
-            <element signature="e#3385#3386#0" expanded="true" />
-            <element signature="e#3422#3423#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="381">
+          <caret line="257" column="55" lean-forward="true" selection-start-line="257" selection-start-column="55" selection-end-line="257" selection-end-column="55" />
         </state>
       </provider>
     </entry>
